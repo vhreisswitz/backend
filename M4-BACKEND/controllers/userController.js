@@ -15,6 +15,26 @@ class UserController {
       return res.status(500).json({ error: "erro ao criar usuario" });
     }
   }
+   async index(req, res){
+        const users = await User.findAll();
+        return res.status(200).json(users);
+    };
+
+    async show(req, res){
+      const user = await User.findByPk(req.params.id);
+      if (!user) {
+        return res.status(404).json({ error: "Usuario nao encontrado" });
+      }
+      return res.status(200).json(user);
+    }
+
+    async update(req, res){
+      const {id} = req.params;
+      const { nome, email } = req.body;
+
+      await User.update({ nome, email }, { where: { id: id } });
+      return res.status(200).json({ message: "Usuario atualizado com sucesso" });
+    }
 }
 
 module.exports = new UserController();
