@@ -35,6 +35,13 @@ class UserController {
       await User.update({ nome, email }, { where: { id: id } });
       return res.status(200).json({ message: "Usuario atualizado com sucesso" });
     }
+
+    async destroy(req, res){
+      const {id} = req.params;
+
+      await User.destroy({ where: {id: id}});
+      return res.status(200).json({ message: "Usuario deletado com sucesso" });
+    }
 }
 
 module.exports = new UserController();
